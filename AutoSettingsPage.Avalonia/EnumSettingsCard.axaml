@@ -11,7 +11,7 @@
     xmlns:models="using:AutoSettingsPage.Models"
     x:DataType="{x:Type models:IEnumSettingsEntry,
                         x:TypeArguments=x:Object}"
-    Description="{Binding Converter={x:Static avalonia:SettingsEntryHelper.DescriptionConverter}}"
+    Description="{avalonia:SettingsDescription}"
     Header="{Binding Header}"
     Tag="{Binding Token}"
     mc:Ignorable="d"

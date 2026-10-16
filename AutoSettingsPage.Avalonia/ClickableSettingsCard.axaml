@@ -10,7 +10,7 @@
     xmlns:models="using:AutoSettingsPage.Models"
     x:DataType="{x:Type models:ClickableSettingsEntry}"
     Click="Clicked"
-    Description="{Binding Converter={x:Static avalonia:SettingsEntryHelper.DescriptionConverter}}"
+    Description="{avalonia:SettingsDescription}"
     Header="{Binding Header}"
     IsClickEnabled="True"
     mc:Ignorable="d"

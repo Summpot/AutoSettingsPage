@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using System.ComponentModel;
 using System.Reflection;
 using FluentIcons.Common;
 
@@ -12,7 +13,7 @@ internal class SimpleSettingsGroup(
     string description,
     Symbol icon,
     Uri? descriptionUri = null)
-    : List<ISettingsEntry>, ISettingsGroup
+    : List<ISettingsEntry>, ISettingsGroup, IRefreshableSettingsLocalization, INotifyPropertyChanged
 {
     public SimpleSettingsGroup(string token, SettingsEntryAttribute attribute)
         : this(
@@ -22,6 +23,7 @@ internal class SimpleSettingsGroup(
             attribute.Icon,
             attribute.DescriptionUri)
     {
+        _localization = attribute;
     }
 
     public SimpleSettingsGroup(LambdaExpression propertyExpression)
@@ -29,20 +31,24 @@ internal class SimpleSettingsGroup(
     {
     }
 
+    private readonly SettingsEntryAttribute? _localization;
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void RefreshLocalization() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(string.Empty));
+
     /// <inheritdoc />
     public string Token { get; } = token;
 
     /// <inheritdoc />
-    public string Header { get; } = header;
+    public string Header => _localization?.Header ?? header;
 
     /// <inheritdoc />
-    public string Description { get; } = description;
+    public string Description => _localization?.Description ?? description;
 
     /// <inheritdoc />
     public Symbol Icon { get; } = icon;
 
     /// <inheritdoc />
-    public Uri? DescriptionUri { get; } = descriptionUri;
+    public Uri? DescriptionUri => _localization?.DescriptionUri ?? descriptionUri;
 
     private static string GetMemberAttribute(LambdaExpression propertyExpression, out MemberExpression member, out SettingsEntryAttribute attribute)
     {

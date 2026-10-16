@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:AutoSettingsPage.Models"
     x:DataType="{x:Type models:IMultiValuesSettingsEntry}"
-    Description="{Binding Converter={x:Static avalonia:SettingsEntryHelper.DescriptionConverter}}"
+    Description="{avalonia:SettingsDescription}"
     Header="{Binding Header}"
     mc:Ignorable="d"
     d:DesignHeight="450"

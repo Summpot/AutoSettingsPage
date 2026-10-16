@@ -10,7 +10,7 @@
     xmlns:models="using:AutoSettingsPage.Models"
     x:DataType="{x:Type models:INumberSettingsEntry,
                         x:TypeArguments=x:Double}"
-    Description="{Binding Converter={x:Static avalonia:SettingsEntryHelper.DescriptionConverter}}"
+    Description="{avalonia:SettingsDescription}"
     Header="{Binding Header}"
     Tag="{Binding Token}"
     mc:Ignorable="d"

@@ -24,7 +24,8 @@ public class SingleValueSettingsEntry<TSettings, TValue> : ObservableSettingsEnt
     }
 
     /// <inheritdoc />
-    public string? Placeholder { get; set; }
+    private bool _placeholderOverride;
+    public string? Placeholder { get => !_placeholderOverride && Localization is not null ? Localization.Placeholder : field; set { field = value; _placeholderOverride = true; OnPropertyChanged(nameof(Placeholder)); } }
 
     private protected readonly Action<TSettings, TValue> Setter;
     private readonly Func<TSettings, TValue> _getter;
@@ -54,7 +55,7 @@ public class SingleValueSettingsEntry<TSettings, TValue> : ObservableSettingsEnt
         : base(token, attribute)
     {
         Settings = settings;
-        Placeholder = attribute.Placeholder;
+
         _getter = getter;
         Setter = setter;
     }
@@ -65,7 +66,7 @@ public class SingleValueSettingsEntry<TSettings, TValue> : ObservableSettingsEnt
         : base(GetMemberAttribute(property, out var member, out var attribute), attribute)
     {
         Settings = settings;
-        Placeholder = attribute.Placeholder;
+
         (_getter, Setter) = GetSettingsEntryInfo(property, member);
     }
 
